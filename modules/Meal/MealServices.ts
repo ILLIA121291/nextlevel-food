@@ -66,8 +66,7 @@ export async function addOneMealToDataBase(formData: any) {
       Body: Buffer.from(bufferedImage),
       ContentType: imageObject.type,
     })
-    .then(result => {
-    })
+    .then(result => {})
     .catch((error: any) => {
       throw new Error('There was an error saving the file. Please try again in a few minutes.');
     });

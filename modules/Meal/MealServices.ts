@@ -35,6 +35,7 @@ export async function getAllMeal() {
 
 // GET ONE PRODUCT --------------------------------------------
 export async function getOneMeal(slug: string) {
+  await connectToDatabase()
   try {
     return await MealModel.findOne({ slug });
   } catch (error) {

@@ -8,6 +8,7 @@ import connectDB from '@/database/database';
 import IMeal from '@/interface/IMeal';
 import { revalidatePath } from 'next/cache';
 import { S3 } from '@aws-sdk/client-s3';
+import connectToDatabase from '@/database/mongoose';
 
 const s3 = new S3({
   region: 'eu-north-1',
@@ -20,7 +21,9 @@ const s3 = new S3({
 // GET ALL PRODUCTS ----------------------------------------------------------
 export async function getAllMeal() {
   try {
-    await connectDB();
+    // await connectDB();
+
+    await connectToDatabase()
 
     return await MealModel.find();
   } catch (error) {

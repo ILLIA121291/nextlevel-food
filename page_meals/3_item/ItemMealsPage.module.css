@@ -1,4 +1,5 @@
 .meal {
+  max-width: 416px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -10,6 +11,13 @@
   color: #ddd6cb;
   background: linear-gradient(90deg, #2c1e19, #25200f);
 }
+
+/* .image {
+  position: relative;
+  height: 15rem;
+  display: flex;
+  justify-content: center;
+} */
 
 .headerText {
   padding: 0.5rem 1rem 0 1rem;
@@ -31,13 +39,6 @@
 .meal h2,
 .meal p {
   margin: 0;
-}
-
-.image {
-  position: relative;
-  height: 15rem;
-  display: flex;
-  justify-content: center;
 }
 
 .meal img {
@@ -75,4 +76,11 @@
 .actions a:active {
   background: linear-gradient(90deg, #fd4715, #f9b241);
   box-shadow: 0 0 12px rgba(242, 100, 18, 0.8);
+}
+
+@media (max-width: 1300px) {
+  .image {
+    display: flex;
+    justify-content: center;
+  }
 }

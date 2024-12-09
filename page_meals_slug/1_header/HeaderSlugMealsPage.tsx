@@ -18,7 +18,7 @@ const HeaderSlugMealsPage: FC<IProps> = ({ image, title, summary, creator }) => 
   return (
     <header className={classes.header}>
       <div className={classes.image}>
-        <Image src={`https://illiabulgakovawsbucket.s3.eu-north-1.amazonaws.com/${image}`} alt={title} width={500} height={500} />
+        <Image src={`https://illiabulgakovawsbucket.s3.eu-north-1.amazonaws.com/${image}`} alt={title} width={500} height={500} priority />
       </div>
 
       <div className={classes.headerText}>

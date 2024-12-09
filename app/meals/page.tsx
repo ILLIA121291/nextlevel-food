@@ -1,4 +1,4 @@
-import HeaderMealsPage from '@/page_meals/1_header/header';
+import HeaderMealsPage from '@/page_meals/1_header/HeaderMealsPage';
 import classes from './page.module.css';
 import { FC } from 'react';
 import GridMealsPage from '@/page_meals/2_grid/GridMealsPage';

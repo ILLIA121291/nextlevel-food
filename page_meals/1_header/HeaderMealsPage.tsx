@@ -1,7 +1,7 @@
 // 'use client';
 
 import { FC } from 'react';
-import classes from './header.module.css';
+import classes from './HeaderMealsPage.module.css';
 import Link from 'next/link';
 
 // Interface ------------------------------------

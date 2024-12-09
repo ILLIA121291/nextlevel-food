@@ -1,19 +1,31 @@
 import mongoose from 'mongoose';
 
-const connectDB = async () => {
-  // if (mongoose.connections[0].readyState) {
-  //   return true;
-  // }
+let isConnected: any = false; // Global variable for tracking connection to data base
 
-  // try {
-  //   await mongoose.connect(process.env.MONGODB_URI!);
+const connectToDatabase = async () => {
+  
+  // This action prevents repeated connections to the database if the connection is already established;
+  if (isConnected) {
+    console.log('Uses an existing connection to MongoDB');
+    return;
+  }
 
-  //   console.log('MongoDB Connected Successfully');
+  try {
+    // First connection to the database;
+    console.log('Connecting to database...');
 
-  //   return true;
-  // } catch (error) {
-  //   console.log(error);
-  // }
+    const db = await mongoose.connect(process.env.MONGODB_URI!);
+    isConnected = db.connections[0].readyState;
+
+    console.log('Connection to MongoDB successful');
+
+  } catch (error) {
+    
+    // Actions if connection to the database is not successful;
+    console.error('Error connecting to MongoDB:', error);
+    throw new Error('Failed to connect to the database');
+
+  }
 };
 
-export default connectDB;
+export default connectToDatabase;

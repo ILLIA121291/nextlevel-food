@@ -4,11 +4,10 @@ import MealModel from './MealModel';
 import slugify from 'slugify';
 import xss from 'xss';
 import { redirect } from 'next/navigation';
-import connectDB from '@/database/database';
 import IMeal from '@/interface/IMeal';
 import { revalidatePath } from 'next/cache';
 import { S3 } from '@aws-sdk/client-s3';
-import connectToDatabase from '@/database/mongoose';
+import connectToDatabase from '@/database/database';
 
 const s3 = new S3({
   region: 'eu-north-1',
@@ -21,99 +20,117 @@ const s3 = new S3({
 // GET ALL PRODUCTS ----------------------------------------------------------
 export async function getAllMeal() {
   try {
-    // await connectDB();
+    // Connecting to a database;
+    await connectToDatabase();
 
-    await connectToDatabase()
-
+    // Search query;
     return await MealModel.find();
   } catch (error) {
-    console.log(error);
+    console.log('An error occurred while trying to retrieve data from the database.', error);
+    throw new Error('An error occurred while getting data, please try again in a few minutes.');
   }
-
-  return [];
 }
 
 // GET ONE PRODUCT --------------------------------------------
 export async function getOneMeal(slug: string) {
-  await connectToDatabase()
   try {
+    // Connecting to a database;
+    await connectToDatabase();
+    // Search query;
     return await MealModel.findOne({ slug });
   } catch (error) {
-    console.log(error);
+    console.log('An error occurred while trying to retrieve data from the database.', error);
+    throw new Error('An error occurred while getting data, please try again in a few minutes.');
   }
-
-  return {};
 }
 
 // ADD ONE MEAL TO DATA BASE -------------------------------------------
 export async function addOneMealToDataBase(formData: any) {
-  console.log('addOneMealToDataBase - Подключение к базе данных....')
-  await connectToDatabase()
-  console.log('addOneMealToDataBase - Успешное подключение к базе данных!!!')
+  // Getting data from a form;
+  const newMealData = {
+    creator: xss(formData.get('creator')),
+    creator_email: xss(formData.get('email')),
+    title: xss(formData.get('title')),
+    summary: xss(formData.get('summary')),
+    instructions: xss(formData.get('instructions')),
+    imageObject: formData.get('img'),
+  };
 
-  // Получение объекта картинки из fromData;
-  const imageObject = formData.get('img');
-  console.log('Обьект с изображением есть!')
+  // Checking for the existence of properties;
+  for (const [key, value] of Object.entries(newMealData)) {
+    if (!value) {
+      throw new Error(`${key} property is missing`);
+    }
+  }
 
-  // Создание слага для картинки;
-  const slug = slugify(formData.get('title'), { lower: true });
-  console.log('Slug есть!')
-  // Получение расширеня полученной картинки;
-  const extension = imageObject.name.split('.').pop();
-  console.log('extension есть!')
-  // Создание нашего собственного имени файла, не нужно использовать полученное имя фаила;
-  const fileName = `${slug}.${extension}`;
-  console.log('fileName есть!')
-  // Конвертация полученного фаила в массив буфера;
-  const bufferedImage = await imageObject.arrayBuffer();
-  console.log('bufferedImage есть!')
-  // Данное действие загружает файлы на AWS buket;
+  //================================================================
+  //================================================================
+  //================================================================
 
-console.log('AWS_ACCESS_KEY_ID:', process.env.AWS_ACCESS_KEY_ID);
-console.log('AWS_SECRET_ACCESS_KEY:', process.env.AWS_SECRET_ACCESS_KEY ? 'Скрыт' : 'Отсутствует');
-console.log('AWS_REGION:', process.env.AWS_REGION);
+  // Adding an image to AWS S3;
 
+  // Creating a slug;
+  const slug = slugify(newMealData.title, { lower: true });
+
+  // Getting the extension of the received image;
+  const extension = newMealData.imageObject.name.split('.').pop();
+
+  // Create our own file name, no need to use the given file name;;
+  const fileName = `${slug}-${Date.now()}.${extension}`;
+
+  // Converting the received file into a buffer array;;
+  const bufferedImage = await newMealData.imageObject.arrayBuffer();
+
+  // This action uploads files to an AWS bucket;
   await s3
     .putObject({
       Bucket: 'illiabulgakovawsbucket',
       Key: fileName,
       Body: Buffer.from(bufferedImage),
-      ContentType: imageObject.type,
+      ContentType: newMealData.imageObject.type,
     })
     .then(result => {
-      console.log('Файл успешно загружен:', result);
+      console.log('File uploaded successfully to AWS S3:', result);
     })
     .catch((error: any) => {
-      console.error('Ошибка загрузки файла в S3:', error);
+      console.error('Error uploading file to AWS S3:', error);
       throw new Error('There was an error saving the file. Please try again in a few minutes.');
     });
 
-  //Connecting to the database
+  // =============================================================
+  // =============================================================
+  // =============================================================
 
-  // Getting data from the form;
+  //Connecting to the database MongoDB;
+  await connectToDatabase();
+
+  // Creating an object to be written to the database;
   const newMeal = new MealModel({
-    creator: formData.get('creator'),
-    creator_email: formData.get('email'),
+    creator: newMealData.creator,
+    creator_email: newMealData.creator_email,
     slug,
-    title: formData.get('title'),
-    summary: xss(formData.get('summary')),
-    instructions: xss(formData.get('instructions')),
+    title: newMealData.title,
+    summary: newMealData.summary,
+    instructions: newMealData.instructions,
     image: fileName,
   });
 
-  console.log('newMeal есть!')
   // This action writes data to the database;
   await newMeal
     .save()
-    // This action gets a response from the database;
     .then((result: IMeal) => {
-      console.log('Данные успешно записаны:', result);
+      // This action receives a successful response if the data was written to the database;
+      console.log('Data successfully written to the database;');
     })
-    // Actions if an error occurs while writing data;
     .catch((error: any) => {
-      console.error('Ошибка записи в базу данных:', error);
+      // Actions if an error occurs while writing data in database;
+      console.log('Error while writing data to the database', error);
       throw new Error('An error occurred while writing data, please try again in a few minutes.');
     });
+
+  // =============================================================
+  // =============================================================
+  // =============================================================
 
   // Update the status of the '/meals' page;
   revalidatePath('/meals');

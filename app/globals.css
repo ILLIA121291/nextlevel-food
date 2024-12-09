@@ -35,6 +35,11 @@ body {
   background: radial-gradient(#282c34, #282c34);
 }
 
+/* * {
+  outline: 3px dashed #f90;
+} */
+
+
 .not-found,
 .error {
   margin-top: 5rem;

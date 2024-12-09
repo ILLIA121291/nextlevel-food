@@ -1,0 +1,23 @@
+.instructions {
+  font-size: 1.25rem;
+  line-height: 1.5;
+  background-color: #6e6464;
+  color: #13120f;
+  border-radius: 8px;
+  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.5);
+  padding: 2rem;
+  max-width: 60rem;
+  margin: 2rem auto;
+  animation: fade-slide-in-from-bottom 1s ease-out forwards;
+}
+
+@keyframes fade-slide-in-from-bottom {
+  0% {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

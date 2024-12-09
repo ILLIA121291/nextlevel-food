@@ -12,7 +12,7 @@ interface IProps {
 
 // COMPONENT ------------------------------------
 const ItemMealsPage: FC<IProps> = ({ meal }) => {
-  const { title, summary, image, slug } = meal;
+  const { title, summary, image, slug, creator } = meal;
 
   // RENDERING COMPONENT ------------------------
   return (
@@ -23,7 +23,7 @@ const ItemMealsPage: FC<IProps> = ({ meal }) => {
         </div>
         <div className={classes.headerText}>
           <h2>{title}</h2>
-          <p>by ILLIA</p>
+          <p>by {creator}</p>
         </div>
       </header>
       <div className={classes.content}>

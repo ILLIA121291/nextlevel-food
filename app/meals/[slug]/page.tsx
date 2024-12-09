@@ -5,6 +5,8 @@ import { notFound } from 'next/navigation';
 import { getOneMeal } from '@/modules/Meal/MealServices';
 import IMeal from '@/interface/IMeal';
 import { PageProps } from '@/.next/types/app/layout';
+import HeaderSlugMealsPage from '@/page_meals_slug/1_header/HeaderSlugMealsPage';
+import MainSlugMealsPage from '@/page_meals_slug/2_main/MainSlugMealsPage';
 
 // INTERFACE METADATA ---------------------------
 type TMetaData = (props: PageProps) => Promise<{ title: string; description: string }>;
@@ -37,36 +39,22 @@ interface IProps {
 }
 
 // COMPONENT --------------------------------------
-const MealsDineamicPage: FC<PageProps> = async ({ params }) => {
+const SlugMealsPage: FC<PageProps> = async ({ params }) => {
   // Get meal name from URL;
   const { slug } = await params;
 
   // Getting data from the database;
   const meal: IMeal = await getOneMeal(slug);
 
-  const { title, image, summary, instructions } = meal;
+  const { title, image, summary, instructions, creator } = meal;
 
   // RENDERING COMPONENT --------------------------
   return (
     <>
-      <header className={classes.header}>
-        <div className={classes.image}>
-          <Image src={`https://illiabulgakovawsbucket.s3.eu-north-1.amazonaws.com/${image}`} alt={title} width={480} height={320} />
-        </div>
-        <div className={classes.headerText}>
-          <h1>{title}</h1>
-          <p className={classes.creator}>
-            by <a>NAME</a>
-          </p>
-          <p className={classes.summary}>{summary}</p>
-        </div>
-      </header>
-
-      <main>
-        <p className={classes.instructions}>{instructions}</p>
-      </main>
+      <HeaderSlugMealsPage image={image} title={title} summary={summary} creator={creator} />
+      <MainSlugMealsPage instructions={instructions} />
     </>
   );
 };
 
-export default MealsDineamicPage;
+export default SlugMealsPage;

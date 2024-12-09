@@ -68,6 +68,11 @@ export async function addOneMealToDataBase(formData: any) {
   const bufferedImage = await imageObject.arrayBuffer();
   console.log('bufferedImage есть!')
   // Данное действие загружает файлы на AWS buket;
+
+console.log('AWS_ACCESS_KEY_ID:', process.env.AWS_ACCESS_KEY_ID);
+console.log('AWS_SECRET_ACCESS_KEY:', process.env.AWS_SECRET_ACCESS_KEY ? 'Скрыт' : 'Отсутствует');
+console.log('AWS_REGION:', process.env.AWS_REGION);
+
   await s3
     .putObject({
       Bucket: 'illiabulgakovawsbucket',

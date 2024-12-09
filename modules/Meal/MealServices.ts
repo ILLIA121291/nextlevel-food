@@ -47,23 +47,26 @@ export async function getOneMeal(slug: string) {
 
 // ADD ONE MEAL TO DATA BASE -------------------------------------------
 export async function addOneMealToDataBase(formData: any) {
+  console.log('addOneMealToDataBase - Подключение к базе данных....')
   await connectToDatabase()
+  console.log('addOneMealToDataBase - Успешное подключение к базе данных!!!')
 
   // Получение объекта картинки из fromData;
   const imageObject = formData.get('img');
+  console.log('Обьект с изображением есть!')
 
   // Создание слага для картинки;
   const slug = slugify(formData.get('title'), { lower: true });
-
+  console.log('Slug есть!')
   // Получение расширеня полученной картинки;
   const extension = imageObject.name.split('.').pop();
-
+  console.log('extension есть!')
   // Создание нашего собственного имени файла, не нужно использовать полученное имя фаила;
   const fileName = `${slug}.${extension}`;
-
+  console.log('fileName есть!')
   // Конвертация полученного фаила в массив буфера;
   const bufferedImage = await imageObject.arrayBuffer();
-
+  console.log('bufferedImage есть!')
   // Данное действие загружает файлы на AWS buket;
   await s3
     .putObject({
@@ -72,13 +75,15 @@ export async function addOneMealToDataBase(formData: any) {
       Body: Buffer.from(bufferedImage),
       ContentType: imageObject.type,
     })
-    .then(result => {})
+    .then(result => {
+      console.log('Файл успешно загружен:', result);
+    })
     .catch((error: any) => {
+      console.error('Ошибка загрузки файла в S3:', error);
       throw new Error('There was an error saving the file. Please try again in a few minutes.');
     });
 
   //Connecting to the database
-  await connectDB();
 
   // Getting data from the form;
   const newMeal = new MealModel({
@@ -91,18 +96,22 @@ export async function addOneMealToDataBase(formData: any) {
     image: fileName,
   });
 
+  console.log('newMeal есть!')
   // This action writes data to the database;
   await newMeal
     .save()
     // This action gets a response from the database;
-    .then((result: IMeal) => {})
+    .then((result: IMeal) => {
+      console.log('Данные успешно записаны:', result);
+    })
     // Actions if an error occurs while writing data;
     .catch((error: any) => {
+      console.error('Ошибка записи в базу данных:', error);
       throw new Error('An error occurred while writing data, please try again in a few minutes.');
     });
 
-  // Update the status of the '/meals' page;
-  revalidatePath('/meals');
-  // Redirect to '/meals' page;
-  redirect('/meals');
+  // // Update the status of the '/meals' page;
+  // revalidatePath('/meals');
+  // // Redirect to '/meals' page;
+  // redirect('/meals');
 }

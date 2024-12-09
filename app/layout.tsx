@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import AppHeader from '@/app_header/0_AppHeader/0_AppHeader';
+import AppHeader from '@/app_header/0_HeaderMainApp/HeaderMainApp';
 import classes from './layout.module.css';
 
 // МЕТОДАННЫЕ ------------------------------

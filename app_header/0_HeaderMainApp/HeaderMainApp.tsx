@@ -1,13 +1,13 @@
 import Link from 'next/link';
 import { FC } from 'react';
-import classes from './0_AppHeader.module.css';
+import classes from './HeaderMainApp.module.css';
 
 import BackgroundHeaderApp from '../1_background/BackgroundHeaderApp';
 import LogoHeaderApp from '../2_logo/LogoHeaderApp';
 import NavBarHeaderApp from '../3_nav_bar/0_NavBarHeaderApp/NavBarHeaderApp';
 
 // COMPONENT ----------------------------------------
-const AppHeader: FC = () => {
+const HeaderMainApp: FC = () => {
   // RENDERING COMPONENT ---------------------------
   return (
     <>
@@ -20,4 +20,4 @@ const AppHeader: FC = () => {
   );
 };
 
-export default AppHeader;
+export default HeaderMainApp;

@@ -1,3 +1,8 @@
+.container {
+  width: 460px;
+  height: 380px;
+}
+
 .slideshow {
   position: relative;
   width: 100%;
@@ -23,4 +28,11 @@
   z-index: 1;
   opacity: 1;
   transform: scale(1) translateX(0) rotate(0);
+}
+
+@media (max-width: 600px) {
+  .container {
+    width: 360px;
+    height: 280px;
+  }
 }

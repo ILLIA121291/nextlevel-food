@@ -1,10 +1,8 @@
-'use client'
+'use client';
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import classes from './ImageSlideShow.module.css';
-
-
 
 const images = [
   { image: 'burger.jpg', alt: 'A delicious, juicy burger' },
@@ -30,13 +28,12 @@ const ImageSlideShow = () => {
 
   // RENDERING COMPONENTS ----------------------------------
   return (
-    <div className={classes.slideshow}>
-      {images.map((image, index) => (
-        <Image 
-        key={index} 
-        src={`https://illiabulgakovawsbucket.s3.eu-north-1.amazonaws.com/${image.image}`} 
-        className={index === currentImageIndex ? classes.active : ''} alt={image.alt} width={800} height={800} />
-      ))}
+    <div className={classes.container}>
+      <div className={classes.slideshow}>
+        {images.map((image, index) => (
+          <Image key={index} src={`https://illiabulgakovawsbucket.s3.eu-north-1.amazonaws.com/${image.image}`} className={index === currentImageIndex ? classes.active : ''} alt={image.alt} width={800} height={800} />
+        ))}
+      </div>
     </div>
   );
 };

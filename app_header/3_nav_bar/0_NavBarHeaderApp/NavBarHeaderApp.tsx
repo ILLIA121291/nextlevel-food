@@ -12,8 +12,8 @@ const NavBarHeaderApp: FC<IProps> = () => {
   // RENDERING COMPONENT ------------------------
   return (
     <nav className={classes.nav}>
-      <ul>
-        <li>
+      <ul className={classes.list}>
+        <li className={classes.item}>
           <LinkNav href="/meals" title="Browse Meals" />
         </li>
 

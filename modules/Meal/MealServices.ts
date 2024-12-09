@@ -115,8 +115,8 @@ console.log('AWS_REGION:', process.env.AWS_REGION);
       throw new Error('An error occurred while writing data, please try again in a few minutes.');
     });
 
-  // // Update the status of the '/meals' page;
-  // revalidatePath('/meals');
-  // // Redirect to '/meals' page;
-  // redirect('/meals');
+  // Update the status of the '/meals' page;
+  revalidatePath('/meals');
+  // Redirect to '/meals' page;
+  redirect('/meals');
 }

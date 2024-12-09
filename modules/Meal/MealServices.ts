@@ -19,6 +19,8 @@ const s3 = new S3({
 
 // GET ALL PRODUCTS ----------------------------------------------------------
 export async function getAllMeal() {
+  //await new Promise(resolve => setTimeout((resolve)=> {}, 5000))
+
   try {
     // Connecting to a database;
     await connectToDatabase();

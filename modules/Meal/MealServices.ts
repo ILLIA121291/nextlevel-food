@@ -47,6 +47,8 @@ export async function getOneMeal(slug: string) {
 
 // ADD ONE MEAL TO DATA BASE -------------------------------------------
 export async function addOneMealToDataBase(formData: any) {
+  await connectToDatabase()
+
   // Получение объекта картинки из fromData;
   const imageObject = formData.get('img');
 

@@ -19,7 +19,7 @@ const ItemMealsPage: FC<IProps> = ({ meal }) => {
     <article className={classes.meal}>
       <header>
         <div className={classes.image}>
-          <Image src={`https://illiabulgakovawsbucket.s3.eu-north-1.amazonaws.com/${image}`} alt={title} width={426} height={240} priority />
+          <Image src={`https://illiabulgakovawsbucket.s3.eu-north-1.amazonaws.com/${image}`}  alt={title} width={426} height={240} priority={false} />
         </div>
         <div className={classes.headerText}>
           <h2>{title}</h2>

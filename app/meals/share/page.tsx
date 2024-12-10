@@ -6,6 +6,13 @@ import { addOneMealToDataBase } from '@/modules/Meal/MealServices';
 import SubmitButtonSharePage from '@/page_share/2_from/2_submit_button/SubmitButtonSharePage';
 import HeaderSharePage from '@/page_share/1_header/HederSharePage';
 import FromSharePage from '@/page_share/2_from/0_FromSharePage/FromSharePage';
+import { Metadata } from 'next';
+
+// METO DATA FOR PAGE -----------------------
+export const metadata: Metadata = {
+  title: 'Share Meal',
+  description: 'Share Meal Page',
+};
 
 // COMPONENT -----------------------------------
 function ShareMealPage() {

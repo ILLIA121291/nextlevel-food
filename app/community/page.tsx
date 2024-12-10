@@ -4,6 +4,13 @@ import mealIcon from '@/public/icons/meal.png';
 import communityIcon from '@/public/icons/community.png';
 import eventsIcon from '@/public/icons/events.png';
 import classes from './page.module.css';
+import { Metadata } from 'next';
+
+// METO DATA FOR PAGE -----------------------
+export const metadata: Metadata = {
+  title: 'Community',
+  description: 'Community Page',
+};
 
 // COMPONENT ----------------------------------
 export default function CommunityPage() {

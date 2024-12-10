@@ -12,7 +12,6 @@ export const metadata: Metadata = {
   description: 'Next Level Food',
 };
 
-
 // PAGE COMPONRNT ------------------------------------------
 const HomePage: FC = async () => {
   // RENDERING PAGE COMPONENT -------------------------

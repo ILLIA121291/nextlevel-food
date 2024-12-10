@@ -78,7 +78,7 @@ export async function addOneMealToDataBase(formData: any) {
   const extension = newMealData.imageObject.name.split('.').pop();
 
   // Create our own file name, no need to use the given file name;;
-  const fileName = `${slug}-${Date.now()}.${extension}`;
+  const fileName = `${Date.now()}-${slug}.${extension}`;
 
   // Converting the received file into a buffer array;;
   const bufferedImage = await newMealData.imageObject.arrayBuffer();

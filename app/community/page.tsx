@@ -21,15 +21,15 @@ export default function CommunityPage() {
 
         <ul className={classes.perks}>
           <li>
-            <Image src={mealIcon} alt="A delicious meal" />
+            <Image src={mealIcon} alt="A delicious meal" priority />
             <p>Share & discover recipes</p>
           </li>
           <li>
-            <Image src={communityIcon} alt="A crowd of people, cooking" />
+            <Image src={communityIcon} alt="A crowd of people, cooking" priority />
             <p>Find new friends & like-minded people</p>
           </li>
           <li>
-            <Image src={eventsIcon} alt="A crowd of people at a cooking event" />
+            <Image src={eventsIcon} alt="A crowd of people at a cooking event" priority />
             <p>Participate in exclusive events</p>
           </li>
         </ul>

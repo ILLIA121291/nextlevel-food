@@ -51,7 +51,7 @@ const ImagePickerSharePage: FC<IProps> = ({ label, name }) => {
         <div className={classes.preview}>
           {!pickImage && <p>No image picked yet</p>}
 
-          {pickImage && <Image src={pickImage} alt="" fill />}
+          {pickImage && <Image src={pickImage} alt="Your image should be added here" fill />}
         </div>
 
         <input className={classes.input} type="file" id={name} name={name} accept="image/png, image/jpeg" ref={imageInput} onChange={handleImageChange} required />

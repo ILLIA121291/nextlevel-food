@@ -15,7 +15,7 @@ const GridMealsPage: FC<IProps> = ({ meals }) => {
   // RENDERING COMPONENT ------------------------
   return (
     <ul className={classes.meals}>
-      {meals.map(meal => {
+      {meals.reverse().map(meal => {
         return (
           <li key={meal._id}>
             <ItemMealsPage meal={meal} />

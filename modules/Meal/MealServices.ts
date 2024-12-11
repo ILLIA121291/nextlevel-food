@@ -48,6 +48,16 @@ export async function getOneMeal(slug: string) {
 
 // ADD ONE MEAL TO DATA BASE -------------------------------------------
 export async function addOneMealToDataBase(formData: any) {
+  const allMeals = await getAllMeal();
+
+  if (allMeals.length > 20) {
+    throw Error('The limit of additions set by ILLIA has been exceeded. Limit 20 pages');
+  }
+
+  //================================================================
+  //================================================================
+  //================================================================
+
   // Getting data from a form;
   const newMealData = {
     creator: xss(formData.get('creator')),
